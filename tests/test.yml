@@ -1,0 +1,24 @@
+---
+- hosts: default
+  roles:
+  - role: ansible-consul
+    consul_arch: linux_amd64
+    consul_version: 0.9.2
+    consul_lib_dir: "{{ansible_env.HOME}}/lib"
+    consul_bin_dir: "{{ansible_env.HOME}}/bin"
+    consul_data_dir: /tmp/consul
+    consul_config_file: /etc/consul/consul.json
+    consul_bootstrap_expect: 1
+    consul_node: "{{ansible_hostname}}"
+    consul_is_server: yes
+    consul_enabled: yes
+    consul_start_join:
+    - "{{ansible_default_ipv4.address}}"
+    become: "{{(ansible_env.USER is undefined)|ternary(ansible_env.HOME != '/root', ansible_env.USER != 'root')}}"
+  tasks:
+  - name: check consul version
+    command: "{{ansible_env.HOME}}/bin/consul --version"
+    register: result
+    changed_when: false
+  - debug:
+      var: result.stdout

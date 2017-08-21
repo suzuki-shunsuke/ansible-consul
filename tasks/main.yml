@@ -1,0 +1,29 @@
+- name: mkdir the consul data directory
+  file:
+    state: directory
+    path: "{{consul_data_dir}}"
+- name: mkdir the consul configuration directory
+  file:
+    state: directory
+    path: "{{consul_config_file|dirname}}"
+- name: deploy consul configuration file
+  template:
+    src: consul.json
+    dest: "{{consul_config_file}}"
+- name: deploy consul's service unit file
+  template:
+    src: consul.service
+    dest: /etc/systemd/system/consul.service
+    mode: 0664
+  register: consul_service_unit
+- name: restart consul
+  systemd:
+    name: consul
+    daemon_reload: "{{consul_service_unit.changed}}"
+    state: restarted
+  when: consul_service_unit.changed
+- name: change consul enabled
+  systemd:
+    name: consul
+    enabled: "{{consul_enabled}}"
+  when: consul_enabled is defined

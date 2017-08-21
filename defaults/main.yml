@@ -1,0 +1,7 @@
+consul_bin_dir: /usr/local/bin
+consul_lib_dir: /usr/local/lib
+consul_data_dir: /tmp/consul
+consul_config_file: /etc/consul/consul.json
+consul_bootstrap_expect: 3
+consul_node: "{{ansible_hostname}}"
+consul_is_server: no
