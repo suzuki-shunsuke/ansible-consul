@@ -57,6 +57,10 @@ consul_enabled | no | undefined (do nothing) | yes/no | whether consul service i
 
 See [CHANGELOG.md](CHANGELOG.md).
 
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## License
 
 [MIT](LICENSE)
