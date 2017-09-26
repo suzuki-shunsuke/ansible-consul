@@ -1,3 +1,7 @@
+{% if consul_start_join is defined %}
 {
   "start_join": {{consul_start_join|to_json}}
 }
+{% else %}
+{}
+{% endif %}

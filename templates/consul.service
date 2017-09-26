@@ -4,6 +4,12 @@ After=syslog.target network.target
 
 [Service]
 Type=simple
-ExecStart={{consul_bin_dir}}/consul agent {% if consul_is_server %}-server{% endif %} -bootstrap-expect={{consul_bootstrap_expect}} -node={{consul_node}} -bind={{ansible_default_ipv4.address}} -data-dir={{consul_data_dir}} -config-file={{consul_config_file}}
+ExecStart={{consul_bin_dir}}/consul agent \
+  {% if consul_is_server %}-server{% endif %} \
+  {% if consul_bootstrap_expect is defined %}-bootstrap-expect={{consul_bootstrap_expect}}{% endif %} \
+  -node={{consul_node}} \
+  -bind={{ansible_default_ipv4.address}} \
+  -data-dir={{consul_data_dir}} \
+  -config-file={{consul_config_file}}
 ExecReload={{consul_bin_dir}}/consul reload
 ExecStop={{consul_bin_dir}}/consul leave
