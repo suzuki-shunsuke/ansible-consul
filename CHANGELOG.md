@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.3.0"></a>
+# [1.3.0](https://github.com/suzuki-shunsuke/ansible-consul/compare/v1.2.0...v1.3.0) (2017-09-27)
+
+
+### Features
+
+* add the variable "consul_bind" ([43faff0](https://github.com/suzuki-shunsuke/ansible-consul/commit/43faff0))
+
+
+
 <a name="1.2.0"></a>
 # [1.2.0](https://github.com/suzuki-shunsuke/ansible-consul/compare/v1.1.0...v1.2.0) (2017-09-26)
 
