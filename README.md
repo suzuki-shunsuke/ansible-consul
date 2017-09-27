@@ -27,6 +27,7 @@ consul_bootstrap_expect | no | not specified | | [-bootstrap-expect](https://www
 consul_node | no | `ansible_hostname` | | [-node](https://www.consul.io/docs/agent/options.html#_node)
 consul_is_server | no | no | yes | [-server](https://www.consul.io/docs/agent/options.html#_server)
 consul_enabled | no | undefined (do nothing) | yes/no | whether consul service is enabled
+consul_bind | no | `ansible_default_ipv4.address` | "192.168.60.10" | [-bind](https://www.consul.io/docs/agent/options.html#_bind)
 
 ## Dependencies
 
