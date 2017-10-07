@@ -8,8 +8,9 @@
     path: "{{consul_config_file|dirname}}"
 - name: deploy consul configuration file
   template:
-    src: consul.json
+    src: consul.json.j2
     dest: "{{consul_config_file}}"
+  register: consul_config_file
 - name: deploy consul's service unit file
   template:
     src: consul.service
@@ -21,7 +22,7 @@
     name: consul
     daemon_reload: "{{consul_service_unit.changed}}"
     state: restarted
-  when: consul_service_unit.changed
+  when: consul_config_file.changed or consul_service_unit.changed
 - name: change consul enabled
   systemd:
     name: consul

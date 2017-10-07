@@ -6,11 +6,12 @@
     consul_version: 0.9.3
     consul_lib_dir: "{{ansible_env.HOME}}/lib"
     consul_bin_dir: "{{ansible_env.HOME}}/bin"
-    consul_data_dir: /tmp/consul
     consul_config_file: /etc/consul/consul.json
-    consul_node: "consul-1"
-    consul_is_server: yes
     consul_enabled: yes
+    consul_config:
+      data_dir: /tmp/consul
+      node_name: consul-1
+      server: true
     become: "{{(ansible_env.USER is undefined)|ternary(ansible_env.HOME != '/root', ansible_env.USER != 'root')}}"
   tasks:
   - name: check consul version
