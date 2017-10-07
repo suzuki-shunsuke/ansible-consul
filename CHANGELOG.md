@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.0.1"></a>
+## [2.0.1](https://github.com/suzuki-shunsuke/ansible-consul/compare/v2.0.0...v2.0.1) (2017-10-07)
+
+
+### Bug Fixes
+
+* fix the collision of the variable name "consul_config_file" ([1cddd17](https://github.com/suzuki-shunsuke/ansible-consul/commit/1cddd17))
+
+
+
 <a name="2.0.0"></a>
 # [2.0.0](https://github.com/suzuki-shunsuke/ansible-consul/compare/v1.3.0...v2.0.0) (2017-10-07)
 
