@@ -20,7 +20,7 @@
 - name: restart consul
   systemd:
     name: consul
-    daemon_reload: "{{consul_service_unit.changed}}"
+    daemon_reload: "{{rgst_consul_service_unit.changed}}"
     state: restarted
   when: rgst_consul_config_file.changed or rgst_consul_service_unit.changed
 - name: change consul enabled
