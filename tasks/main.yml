@@ -10,19 +10,19 @@
   template:
     src: consul.json.j2
     dest: "{{consul_config_file}}"
-  register: consul_config_file
+  register: rgst_consul_config_file
 - name: deploy consul's service unit file
   template:
     src: consul.service
     dest: /etc/systemd/system/consul.service
     mode: 0664
-  register: consul_service_unit
+  register: rgst_consul_service_unit
 - name: restart consul
   systemd:
     name: consul
     daemon_reload: "{{consul_service_unit.changed}}"
     state: restarted
-  when: consul_config_file.changed or consul_service_unit.changed
+  when: rgst_consul_config_file.changed or rgst_consul_service_unit.changed
 - name: change consul enabled
   systemd:
     name: consul
