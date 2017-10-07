@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/suzuki-shunsuke/ansible-consul/compare/v1.3.0...v2.0.0) (2017-10-07)
+
+
+### Features
+
+* enable to set all consul's configuration ([23c92e6](https://github.com/suzuki-shunsuke/ansible-consul/commit/23c92e6))
+
+
+### BREAKING CHANGES
+
+* Some variables are removed. Set them in the `consul_config` variable.
+
+* consul_data_dir: consul_config.data_dir
+* consul_node: consul_config.node_name
+* consul_is_server: consul_config.server
+* consul_bind: consul_config.bind_addr
+* consul_bootstrap_expect: consul_config.bootstrap_expect
+
+
+
 <a name="1.3.0"></a>
 # [1.3.0](https://github.com/suzuki-shunsuke/ansible-consul/compare/v1.2.0...v1.3.0) (2017-09-27)
 
