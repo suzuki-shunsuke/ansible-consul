@@ -6,17 +6,17 @@ galaxy_info:
   github_branch: master
 
   platforms:
-  - name: EL
-    versions:
-    - 7
+    - name: EL
+      versions:
+        - 7
 
   galaxy_tags:
-  - consul
+    - consul
 
 dependencies:
-- role: suzuki-shunsuke.hashicorp-binary
-  hashicorp_binary_name: consul
-  hashicorp_binary_arch: "{{consul_arch}}"
-  hashicorp_binary_version: "{{consul_version}}"
-  hashicorp_binary_lib_dir: "{{consul_lib_dir}}"
-  hashicorp_binary_bin_dir: "{{consul_bin_dir}}"
+  - role: suzuki-shunsuke.hashicorp-binary
+    hashicorp_binary_name: consul
+    hashicorp_binary_arch: "{{consul_arch}}"
+    hashicorp_binary_version: "{{consul_version}}"
+    hashicorp_binary_lib_dir: "{{consul_lib_dir}}"
+    hashicorp_binary_bin_dir: "{{consul_bin_dir}}"

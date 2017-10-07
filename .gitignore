@@ -13,3 +13,7 @@ tests/_roles
 
 # Node.js
 node_modules
+
+# git-rm-branch
+# https://github.com/suzuki-shunsuke/git-rm-branch
+.git-rm-branch.yml
