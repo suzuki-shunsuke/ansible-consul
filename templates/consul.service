@@ -8,3 +8,6 @@ ExecStart={{consul_bin_dir}}/consul agent \
   -config-file={{consul_config_file}}
 ExecReload={{consul_bin_dir}}/consul reload
 ExecStop={{consul_bin_dir}}/consul leave
+
+[Install]
+WantedBy=multi-user.target
