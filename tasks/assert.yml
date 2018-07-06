@@ -1,0 +1,7 @@
+---
+- assert:
+    that:
+    - consul_install_dir is defined
+    - consul_version is defined
+    - consul_arch is defined
+    - consul_bin_path is defined

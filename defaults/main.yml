@@ -1,3 +1,4 @@
+---
 consul_bin_dir: /usr/local/bin
 consul_lib_dir: /usr/local/lib
 consul_data_dir: /tmp/consul
@@ -7,3 +8,6 @@ consul_default_config:
   bind_addr: "{{ansible_default_ipv4.address}}"
   server: false
 consul_config: {}
+consul_zip_dl_timeout: 60
+consul_zip_is_removed: true
+consul_service_unit_file: /etc/systemd/system/consul.service
