@@ -1,10 +1,5 @@
 ---
-# the symbolic link {{consul_install_dir}}/consul to consul binary is created
-consul_install_dir: /usr/local/bin
-# consul binary {{consul_bin_path}}/consul-{{consul_version}} is installed
-consul_bin_path: /usr/local/bin/consul
-# consul_log_dir: /tmp/consul
-# consul configuration file path
+consul_data_dir: /tmp/consul
 consul_config_file: /etc/consul/consul.json
 # default consul configuration.
 # the configuration is written in {{consul_config_file}}.
@@ -39,4 +34,3 @@ consul_group: consul
 consul_run_path: /var/run/consul
 # consul unit file's environment variables
 consul_env_vars: {}
-# consul_tempdir_used: no
