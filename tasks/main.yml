@@ -1,87 +1,28 @@
 ---
-# {{consul_install_dir}}/consul-{{consul_version}}
-# {{consul_bin_path}}
 - name: assertion
   import_tasks: assert.yml
-- name: check whether the binary has already installed
-  stat:
-    path: "{{consul_install_dir}}/consul-{{consul_version}}"
-  register: consul_bin_stat
-- block:
-  # install binary
-  - name: check whether the zip has already been downloaded
-    stat:
-      path: /tmp/consul_{{consul_version}}_{{consul_arch}}.zip
-    register: consul_zip_stat
-  - name: download consul zip
-    get_url:
-      url: "https://releases.hashicorp.com/consul/{{consul_version}}/consul_{{consul_version}}_{{consul_arch}}.zip"
-      dest: /tmp
-      timeout: "{{consul_zip_dl_timeout}}"
-      mode: 0777
-    become: no
-    when: not consul_zip_stat.stat.exists
-  - name: create install directory
-    file:
-      state: directory
-      dest: "{{consul_install_dir}}"
-  - name: unzip the package
-    unarchive:
-      src: /tmp/consul_{{consul_version}}_{{consul_arch}}.zip
-      dest: "{{consul_install_dir}}"
-      remote_src: yes
-  - name: remove zip
-    file:
-      path: /tmp/consul_{{consul_version}}_{{consul_arch}}.zip
-      state: absent
-    when: consul_zip_is_removed
-  when: not consul_bin_stat.stat.exists
-# create symbolic link
-- name: create install bin path parent directory
-  file:
-    state: directory
-    dest: "{{consul_bin_path|dirname}}"
-- name: check whether the link has been created
-  stat:
-    path: "{{consul_bin_path}}"
-  register: consul_link_stat
-- name: remove symbolic link
-  file:
-    state: absent
-    path: "{{consul_bin_path}}"
-  when: not consul_link_stat.stat.islnk or st.stat.lnk_source != "{}/consul-{}".format(consul_install_dir, consul_version)
-- name: create symlink to consul bin path
-  file:
-    src: "{{consul_install_dir}}/consul-{{consul_version}}"
-    dest: "{{consul_bin_path}}"
-    state: link
+- name: install consul binary
+  import_tasks: install_binary.yml
+- name: create symbolic link to consul binary
+  import_tasks: link_bin.yml
+- name: create user and group
+  import_tasks: user_group.yml
 - name: mkdir the consul data directory
   file:
     state: directory
-    path: "{{consul_data_dir}}"
-  when: consul_data_dir is defined and consul_data_dir
-- block:
-  - name: mkdir the consul configuration directory
-    file:
-      state: directory
-      path: "{{consul_config_file|dirname}}"
-  - name: deploy consul configuration file
-    template:
-      src: consul.json.j2
-      dest: "{{consul_config_file}}"
-  when: consul_config_file is defined and consul_config_file
-- name: deploy consul's service unit file
-  template:
-    src: consul.service
-    dest: "{{consul_service_unit_file}}"
-    mode: 0664
-- name: restart consul
-  systemd:
-    name: consul
-    daemon_reload: "{{rgst_consul_service_unit.changed}}"
-    state: restarted
-- name: change consul enabled
-  systemd:
-    name: consul
-    enabled: "{{consul_enabled}}"
-  when: consul_enabled is defined
+    path: "{{consul_merged_config.data_dir}}"
+    owner: "{{consul_user}}"
+    group: "{{consul_group}}"
+- name: configure consul
+  import_tasks: config.yml
+- name: mkdir the consul run directory
+  file:
+    state: directory
+    path: "{{consul_run_path}}"
+    owner: "{{consul_user}}"
+    group: "{{consul_group}}"
+# TODO acl
+# TODO tls
+# TODO gossip encryption
+- name: configure sytemd
+  import_tasks: systemd.yml

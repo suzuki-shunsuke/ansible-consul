@@ -1,0 +1,47 @@
+---
+- name: check whether the binary has already installed
+  stat:
+    path: "{{consul_install_dir}}/consul-{{consul_version}}"
+  register: consul_bin_stat
+- block:
+  # install binary
+  - name: install unzip
+    yum:
+      name: unzip
+  - name: check whether the zip has already been downloaded
+    stat:
+      path: /tmp/consul_{{consul_version}}_{{consul_arch}}.zip
+    register: consul_zip_stat
+  - name: download consul zip
+    get_url:
+      url: "https://releases.hashicorp.com/consul/{{consul_version}}/consul_{{consul_version}}_{{consul_arch}}.zip"
+      dest: /tmp
+      timeout: "{{consul_zip_dl_timeout|default(omit)}}"
+      mode: 0777
+    become: no
+    when: not consul_zip_stat.stat.exists
+  - name: create install directory
+    file:
+      state: directory
+      dest: "{{consul_install_dir}}"
+  - name: unzip the package
+    unarchive:
+      src: /tmp/consul_{{consul_version}}_{{consul_arch}}.zip
+      dest: /tmp
+      remote_src: yes
+  - name: copy the consul binary to consul_install_dir
+    copy:
+      src: /tmp/consul
+      dest: "{{consul_install_dir}}/consul-{{consul_version}}"
+      mode: 0755
+      remote_src: yes
+  - name: remove binary from /tmp
+    file:
+      state: absent
+      path: /tmp/consul
+  - name: remove zip
+    file:
+      path: /tmp/consul_{{consul_version}}_{{consul_arch}}.zip
+      state: absent
+    when: consul_zip_is_removed
+  when: not consul_bin_stat.stat.exists

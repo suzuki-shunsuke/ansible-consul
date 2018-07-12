@@ -1,0 +1,19 @@
+---
+- name: create install bin path parent directory
+  file:
+    state: directory
+    dest: "{{consul_bin_path|dirname}}"
+- name: check whether the link has been created
+  stat:
+    path: "{{consul_bin_path}}"
+  register: consul_link_stat
+- name: remove symbolic link
+  file:
+    state: absent
+    path: "{{consul_bin_path}}"
+  when: consul_link_stat.stat.exists and (not consul_link_stat.stat.islnk or consul_link_stat.stat.lnk_source != "{}/consul-{}".format(consul_install_dir, consul_version))
+- name: create symlink to consul bin path
+  file:
+    src: "{{consul_install_dir}}/consul-{{consul_version}}"
+    dest: "{{consul_bin_path}}"
+    state: link

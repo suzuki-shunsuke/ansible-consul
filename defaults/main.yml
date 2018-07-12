@@ -1,13 +1,42 @@
 ---
-consul_bin_dir: /usr/local/bin
-consul_lib_dir: /usr/local/lib
-consul_data_dir: /tmp/consul
+# the symbolic link {{consul_install_dir}}/consul to consul binary is created
+consul_install_dir: /usr/local/bin
+# consul binary {{consul_bin_path}}/consul-{{consul_version}} is installed
+consul_bin_path: /usr/local/bin/consul
+# consul_log_dir: /tmp/consul
+# consul configuration file path
 consul_config_file: /etc/consul/consul.json
+# default consul configuration.
+# the configuration is written in {{consul_config_file}}.
 consul_default_config:
   node_name: "{{ansible_hostname}}"
   bind_addr: "{{ansible_default_ipv4.address}}"
+  data_dir: /var/consul
   server: false
+# consul configuration. this configuration is merged with {{consul_default_config}}.
 consul_config: {}
+# consul configurations.
+# Ex. {{consul_configd_path}}/web.json
+#   web:
+#     service:
+#       name: web
+#       tags:
+#       - rails
+#       port: 80
+consul_config_files: {}
+# whether consul service is enabled
+consul_enabled: yes
+# consul zip's download timeout (sec)
 consul_zip_dl_timeout: 60
-consul_zip_is_removed: true
+# whether consul zip is removed after unziped
+consul_zip_is_removed: no
+# consul service unit file path
 consul_service_unit_file: /etc/systemd/system/consul.service
+# user and group which run consul agent
+consul_user: consul
+consul_group: consul
+# consul pid file is created at {{consul_run_path}}/consul.pid
+consul_run_path: /var/run/consul
+# consul unit file's environment variables
+consul_env_vars: {}
+# consul_tempdir_used: no
