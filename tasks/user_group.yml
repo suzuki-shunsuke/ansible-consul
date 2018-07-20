@@ -1,0 +1,11 @@
+---
+- name: create user to run consul
+  group:
+    name: "{{consul_group}}"
+  when: consul_group is defined and consul_group
+- name: create user to run consul
+  user:
+    name: "{{consul_user}}"
+    group: "{{consul_group}}"
+    system: yes
+  when: consul_group is defined and consul_user is defined and consul_user and consul_group

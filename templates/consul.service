@@ -1,13 +1,24 @@
 [Unit]
 Description=Consul Agent
-After=syslog.target network.target
+Requires=network-online.target
+After=network-online.target
 
 [Service]
+User={{consul_user}}
+Group={{consul_group}}
 Type=simple
-ExecStart={{consul_bin_dir}}/consul agent \
-  -config-file={{consul_config_file}}
-ExecReload={{consul_bin_dir}}/consul reload
-ExecStop={{consul_bin_dir}}/consul leave
+ExecStart={{consul_bin_path}} agent \
+  -config-file={{consul_config_file}} \
+  -config-dir={{consul_configd_path|default("{}/{}".format(consul_config_file|dirname, "consul.d"))}} \
+  -pid-file={{consul_run_path}}/consul.pid
+ExecReload={{consul_bin_path}} reload
+KillMode=process
+KillSignal=SIGTERM
+Restart=on-failure
+RestartSec=30s
+{% for var in consul_env_vars %}
+Environment={{var}}
+{% endfor %}
 
 [Install]
 WantedBy=multi-user.target

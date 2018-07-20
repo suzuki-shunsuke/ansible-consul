@@ -3,19 +3,19 @@
   roles:
   - role: ansible-consul
     consul_arch: linux_amd64
-    consul_version: 0.9.3
-    consul_lib_dir: "{{ansible_env.HOME}}/lib"
-    consul_bin_dir: "{{ansible_env.HOME}}/bin"
-    consul_config_file: /etc/consul/consul.json
-    consul_enabled: yes
-    consul_config:
-      data_dir: /tmp/consul
-      node_name: consul-1
-      server: true
+    consul_version: 1.2.0
+    consul_zip_is_removed: no
+    consul_config_files:
+      web:
+        service:
+          name: web
+          tags:
+          - rails
+          port: 80
     become: "{{(ansible_env.USER is undefined)|ternary(ansible_env.HOME != '/root', ansible_env.USER != 'root')}}"
   tasks:
   - name: check consul version
-    command: "{{ansible_env.HOME}}/bin/consul --version"
+    command: "sudo /usr/local/bin/consul --version"
     register: result
     changed_when: false
   - debug:

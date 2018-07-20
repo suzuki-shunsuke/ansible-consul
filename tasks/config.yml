@@ -1,0 +1,17 @@
+---
+- name: mkdir the consul configuration directory
+  file:
+    state: directory
+    path: "{{item}}"
+  with_items:
+  - "{{consul_config_file|dirname}}"
+  - "{{consul_configd_path|default('{}/{}'.format(consul_config_file|dirname, 'consul.d'))}}"
+- name: deploy consul configuration file
+  template:
+    src: consul.json.j2
+    dest: "{{consul_config_file}}"
+- name: deploy consul configuration files
+  template:
+    src: consul.json.j2
+    dest: "{{consul_configd_path|default('{}/{}'.format(consul_config_file|dirname, 'consul.d'))}}/{{item.key}}.json"
+  with_dict: "{{consul_config_files}}"

@@ -1,0 +1,18 @@
+---
+- block:
+  - name: deploy consul's service unit file
+    template:
+      src: consul.service
+      dest: "{{consul_service_unit_file}}"
+      mode: 0664
+      # - name: restart consul
+      #   systemd:
+      #     name: consul
+      #     daemon_reload: "{{rgst_consul_service_unit.changed}}"
+      #     state: restarted
+  - name: change consul enabled
+    systemd:
+      name: consul
+      enabled: "{{consul_enabled}}"
+    when: consul_enabled is defined
+  when: consul_service_unit_file is defined and consul_service_unit_file
