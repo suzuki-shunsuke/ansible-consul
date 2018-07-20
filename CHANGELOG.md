@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.0.0"></a>
+# [3.0.0](https://github.com/suzuki-shunsuke/ansible-consul/compare/v2.0.3...v3.0.0) (2018-07-20)
+
+
+### Features
+
+* improve role ([ee7d758](https://github.com/suzuki-shunsuke/ansible-consul/commit/ee7d758))
+* remove dependencies ([125ba45](https://github.com/suzuki-shunsuke/ansible-consul/commit/125ba45))
+
+
+
 <a name="2.0.3"></a>
 ## [2.0.3](https://github.com/suzuki-shunsuke/ansible-consul/compare/v2.0.2...v2.0.3) (2017-10-09)
 
