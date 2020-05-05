@@ -8,7 +8,7 @@
     "@commitlint/cli": "7.6.1",
     "@commitlint/config-angular": "7.6.0",
     "@commitlint/travis-cli": "7.6.1",
-    "husky": "0.14.3",
+    "husky": "4.2.5",
     "standard-version": "4.4.0"
   }
 }
